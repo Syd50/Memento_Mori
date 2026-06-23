@@ -64,12 +64,17 @@ public class MonsterSpawner : MonoBehaviour
 
         if(monster != null)
         {
+
+            Debug.Log("About to activate ");
+
             //pick a random lane on thew road
             float randomX = Random.Range(-roadWidth / 2f, roadWidth / 2f);
             monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
 
             //turn it on
             monster.SetActive(true);
+
+            Debug.Log("Activated " + monster.name);
         }
     }
 
@@ -105,4 +110,9 @@ public class MonsterSpawner : MonoBehaviour
             }
         }
     }
+
+
+
 }
+
+

@@ -7,6 +7,9 @@ public class BikeController : MonoBehaviour
     public float tiltSensitivity = 30f;
     public float roadWidthLimit = 2f;
 
+    
+    
+
     //smoothing out visuals
     public float leanAmount = 25f;
     //how quickly bike rotate towards its target lean angle

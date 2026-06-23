@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public GameObject gameOverPanel;
+    public Image fadeImage;
+
+    public float fadeDuration = 1.5f;
+    //need to freeze player movement after collision with monster
+    //public BikeController bikeController;   ----------------------------------- Bike isnt moving, ROAD IS
 
     private void Awake()
     {
@@ -15,8 +22,40 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    //stop road immediately?
     public void GameOver()
     {
+        MonsterSpawner spawner = FindFirstObjectByType<MonsterSpawner>();
+        if (spawner != null)
+        {
+            spawner.enabled = false;
+        }
+
+        ObjectPoolRoad[] roads = Object.FindObjectsByType<ObjectPoolRoad>(FindObjectsSortMode.None);
+
+        foreach (ObjectPoolRoad road in roads)
+        {
+            road.enabled = false;
+        }
+        //bikeController.enabled = false;
+        StartCoroutine(FadeToGameOver());
+    }
+    private IEnumerator FadeToGameOver()
+    {
+        float timer = 0f;
+
+        Color colour = fadeImage.color;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+
+            colour.a = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            fadeImage.color = colour;
+
+            yield return null;
+        } 
+    
         gameOverPanel.SetActive(true);
         //pause entire game by stopping unity's time system
         // 0 = paused
