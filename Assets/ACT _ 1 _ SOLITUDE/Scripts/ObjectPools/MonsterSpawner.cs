@@ -43,6 +43,7 @@ public class MonsterSpawner : MonoBehaviour
         }
     }
 
+    //moving and spawning
     private void Update()
     {
         //timing

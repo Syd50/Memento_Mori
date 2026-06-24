@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public GameObject startPanel;
+
     public GameObject gameOverPanel;
     public Image fadeImage;
 
@@ -20,6 +22,24 @@ public class GameManager : MonoBehaviour
         //ANALOGY - TV remote. There is only ONE, everyone uses the same one to contorl the TV. Don't want 5 remotes controlling same TV (singleton prevents this)
         //other scripts will be able to access using class name - instance
         Instance = this;
+    }
+
+    private void Start()
+    {
+        //show start screen
+        startPanel.SetActive(true);
+
+        //hide over actual game
+        gameOverPanel.SetActive(false);
+
+        //pause game
+        Time.timeScale = 0f;
+    }
+
+    public void StartGame()
+    {
+        startPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     //stop road immediately?
