@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private bool gameStarted = false;
+
     private void Start()
     {
         //show start screen
@@ -34,6 +36,15 @@ public class GameManager : MonoBehaviour
 
         //pause game
         Time.timeScale = 0f;
+    }
+
+    //touch anywhere for now and the game starts
+    private void Update()
+    {
+        if(!gameStarted&& Input.touchCount > 0)
+        {
+            StartGame();
+        }
     }
 
     public void StartGame()
