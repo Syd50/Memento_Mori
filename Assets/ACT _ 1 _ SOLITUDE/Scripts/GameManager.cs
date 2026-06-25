@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject startPanel;
+    //public GameObject startPanel;
 
     public GameObject gameOverPanel;
     public Image fadeImage;
@@ -24,34 +24,34 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private bool gameStarted = false;
+    //private bool gameStarted = false;
 
-    private void Start()
-    {
-        //show start screen
-        startPanel.SetActive(true);
+    //private void Start()
+    //{
+    //    //show start screen
+    //    startPanel.SetActive(true);
 
-        //hide over actual game
-        gameOverPanel.SetActive(false);
+    //    //hide over actual game
+    //    gameOverPanel.SetActive(false);
 
-        //pause game
-        Time.timeScale = 0f;
-    }
+    //    //pause game
+    //    Time.timeScale = 0f;
+    //}
 
     //touch anywhere for now and the game starts
-    private void Update()
-    {
-        if(!gameStarted&& Input.touchCount > 0)
-        {
-            StartGame();
-        }
-    }
+    //private void Update()
+    //{
+    //    if(!gameStarted&& Input.touchCount > 0)
+    //    {
+    //        StartGame();
+    //    }
+    //}
 
-    public void StartGame()
-    {
-        startPanel.SetActive(false);
-        Time.timeScale = 1f;
-    }
+    //public void StartGame()
+    //{
+    //    startPanel.SetActive(false);
+    //    Time.timeScale = 1f;
+    //}
 
     //stop road immediately?
     public void GameOver()

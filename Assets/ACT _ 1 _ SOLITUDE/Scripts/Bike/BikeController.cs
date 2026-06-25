@@ -7,6 +7,9 @@ public class BikeController : MonoBehaviour
     public float tiltSensitivity = 30f;
     public float roadWidthLimit = 2f;
 
+    //tilting off the road, callibrate it so the middle is always the middle
+    private float tiltOffset = 0f;
+
     
     
 
@@ -25,6 +28,9 @@ public class BikeController : MonoBehaviour
             InputSystem.EnableDevice(Accelerometer.current);
             //how often accelerometer updates
             Accelerometer.current.samplingFrequency = 60f;
+
+            //starting tilt, read the value 
+            tiltOffset = Accelerometer.current.acceleration.ReadValue().x;
         }
     }
 
@@ -40,7 +46,7 @@ public class BikeController : MonoBehaviour
         if (Accelerometer.current != null && Accelerometer.current.enabled)
         {
             //read current acceleration value
-            tiltInput = Accelerometer.current.acceleration.ReadValue().x;
+            tiltInput = Accelerometer.current.acceleration.ReadValue().x - tiltOffset;
         }
 
         //move bike side to side
