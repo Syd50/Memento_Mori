@@ -42,27 +42,37 @@ public class SwipeListener : MonoBehaviour
     //the swipe directions dont change, just the colours do
     private void OnSwipeReceived(MobileInputManager.SwipeDirection direction, Vector3 startScreenPosition, Vector3 endScreenPosition)
     {
-        Vector3 forceDirection = Vector3.zero;
 
-        switch (direction)
-        {
-            case MobileInputManager.SwipeDirection.Right:
-                forceDirection = Vector3.right;
-                break;
-                case MobileInputManager.SwipeDirection.Left:
-                forceDirection = Vector3.left;
-                break;
-                case MobileInputManager.SwipeDirection.Up:    // check forward
-                forceDirection = Vector3.up;
-                break;
-                case MobileInputManager.SwipeDirection.Down:   // check back
-                forceDirection = Vector3.down; 
-                break;
-        }
+        //THIS LINE made up = forward and down = back
+        //keep it --------------------------------------------------- tomorrow ------------------ > add some sort of vector.up * by some small ish value, so it lifts a bit
+        Vector2 swipe = (endScreenPosition - startScreenPosition).normalized;
+        //need to convert that to 3D force
+
+        Vector3 forceDirection = new Vector3(swipe.x, 0f, swipe.y);
+
+        forceDirection += Vector3.up * 0.5f;
+
+
+        //switch (direction)
+        //{
+        //    case MobileInputManager.SwipeDirection.Right:
+        //        forceDirection = Vector3.right;
+        //        break;
+        //        case MobileInputManager.SwipeDirection.Left:
+        //        forceDirection = Vector3.left;
+        //        break;
+        //        case MobileInputManager.SwipeDirection.Up:    // FORWARD
+        //        forceDirection = Vector3.up;
+        //        break;
+        //        case MobileInputManager.SwipeDirection.Down:   // BACK
+        //        forceDirection = Vector3.down; 
+        //        break;
+        //}
 
         //forceDirection += Vector3.up * upwardForce;
 
         rb.AddForce(forceDirection * throwForce, ForceMode.Impulse);
+
         //ForceMode.VelocityChange  -- try later
 
 
