@@ -27,7 +27,9 @@ public class SwipeListener : MonoBehaviour
     void Start()
     {
         //myRenderer = GetComponent<MeshRenderer>();
-        rb = GetComponent<Rigidbody>();
+
+        //get rid of this, it overwrites when i put pelvis rb into rb slot. 
+        //rb = GetComponent<Rigidbody>();
 
         MobileInputManager.instance.OnSwipe += OnSwipeReceived;
 
@@ -50,7 +52,7 @@ public class SwipeListener : MonoBehaviour
 
         Vector3 forceDirection = new Vector3(swipe.x, 0f, swipe.y);
 
-        forceDirection += Vector3.up * 0.5f;
+        forceDirection += Vector3.up * 0.8f;
 
 
         //switch (direction)
