@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     //public GameObject startPanel;
 
+    //ACT 1
     public GameObject gameOverPanel;
     public Image fadeImage;
 
@@ -15,6 +17,13 @@ public class GameManager : MonoBehaviour
     //need to freeze player movement after collision with monster
     //public BikeController bikeController;   ----------------------------------- Bike isnt moving, ROAD IS
 
+    //ACT 3
+    [SerializeField] private float exitDelay = 2f;
+
+    //[SerializeField] private GameObject creditSequence;
+
+
+    //ACT 1
     private void Awake()
     {
         //store as a static variable called Instance
@@ -93,5 +102,47 @@ public class GameManager : MonoBehaviour
         // 1 = normal speed
         Time.timeScale = 0f;
     }
+
+    //ACT 3
+    private bool hasExited = false;
+
+    public void PlayerReachedExit()
+    {
+        Debug.Log("EXIT REACHED");
+
+        if (hasExited) return;
+        hasExited = true;
+
+        StartCoroutine(ExitSequence());
+    }
+
+
+    //exit coroutine for ACT  3
+
+    private IEnumerator ExitSequence()
+    {
+
+        Debug.Log("EXIT SEQUENCE STARTED");
+        yield return new WaitForSeconds(exitDelay);
+
+        float timer = 0f;
+        Color colour = fadeImage.color;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.deltaTime;
+            colour.a = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+            fadeImage.color = colour;
+            yield return null;
+        }
+
+        //ending panel, change to png sequence later
+
+        //creditSequence.SetActive(true);
+        //pause on black screen for now
+        Time.timeScale = 0f;
+
+    }
+
 
 }

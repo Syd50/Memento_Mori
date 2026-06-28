@@ -9,6 +9,12 @@ public class SwipeListener : MonoBehaviour
     [SerializeField] private float throwForce = 10f;
     //[SerializeField] private float upwardForce = 2f;
 
+    //[SerializeField] private DecalFade decal;
+
+    //somewhere below detect when the ragdoll body hits the ground
+    //OnCollisionEnter
+    //Tag the ground as ground 
+
 
     //[SerializeField] private Color rightColour;
     //[SerializeField] private Color leftColour;
@@ -35,7 +41,7 @@ public class SwipeListener : MonoBehaviour
 
     }
 
-    private void OnDistable()
+    private void OnDisable()
     {
         //always make sure when you have a listener, that you also always remove that listner
         MobileInputManager.instance.OnSwipe -= OnSwipeReceived;
@@ -80,5 +86,19 @@ public class SwipeListener : MonoBehaviour
 
     }
 
- 
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        //move the decal to the point where the plauer hits the ground
+    //        Vector3 hitPoint = collision.contacts[0].point;
+
+    //        decal.transform.position = hitPoint + Vector3.up * 0.01f;
+
+    //        //trigger the fade
+    //        decal.TriggerFade();
+    //    }
+    //}
+
+
 }
