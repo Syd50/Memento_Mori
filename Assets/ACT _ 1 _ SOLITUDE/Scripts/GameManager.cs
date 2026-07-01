@@ -13,14 +13,16 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public Image fadeImage;
 
-    public float fadeDuration = 1.5f;
+    public float fadeDuration = 2f;
     //need to freeze player movement after collision with monster
     //public BikeController bikeController;   ----------------------------------- Bike isnt moving, ROAD IS
 
     //ACT 3
     [SerializeField] private float exitDelay = 2f;
 
-    //[SerializeField] private GameObject creditSequence;
+    [SerializeField] private GameObject filmGrain;
+    //holds png sequence, animator and cangvas group
+     private CanvasGroup grainCanvasGroup;
 
 
     //ACT 1
@@ -31,36 +33,20 @@ public class GameManager : MonoBehaviour
         //ANALOGY - TV remote. There is only ONE, everyone uses the same one to contorl the TV. Don't want 5 remotes controlling same TV (singleton prevents this)
         //other scripts will be able to access using class name - instance
         Instance = this;
+
+        //grab component before start to try forcce it to work
+
+        grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
+
+        if (grainCanvasGroup == null)
+        {
+            grainCanvasGroup.alpha = 0f;
+        }
+        else
+        {
+            Debug.Log("Missing Canvas Group component on " + filmGrain.name);
+        }
     }
-
-    //private bool gameStarted = false;
-
-    //private void Start()
-    //{
-    //    //show start screen
-    //    startPanel.SetActive(true);
-
-    //    //hide over actual game
-    //    gameOverPanel.SetActive(false);
-
-    //    //pause game
-    //    Time.timeScale = 0f;
-    //}
-
-    //touch anywhere for now and the game starts
-    //private void Update()
-    //{
-    //    if(!gameStarted&& Input.touchCount > 0)
-    //    {
-    //        StartGame();
-    //    }
-    //}
-
-    //public void StartGame()
-    //{
-    //    startPanel.SetActive(false);
-    //    Time.timeScale = 1f;
-    //}
 
     //stop road immediately?
     public void GameOver()
@@ -119,28 +105,61 @@ public class GameManager : MonoBehaviour
 
     //exit coroutine for ACT  3
 
+    //change to fade in WHEN player lands
     private IEnumerator ExitSequence()
     {
 
         Debug.Log("EXIT SEQUENCE STARTED");
+
+        //just wait for player to land instead??
+
         yield return new WaitForSeconds(exitDelay);
 
-        float timer = 0f;
-        Color colour = fadeImage.color;
-
-        while (timer < fadeDuration)
+        if (grainCanvasGroup != null)
         {
-            timer += Time.deltaTime;
-            colour.a = Mathf.Lerp(0f, 1f, timer / fadeDuration);
-            fadeImage.color = colour;
-            yield return null;
+            //try forcing to be zero so it doesnt flash weirdly
+            grainCanvasGroup.alpha = 0f;
+            filmGrain.SetActive(true);
+
+            //dont go all the way to 1, its a light  over lay
+            float timer = 0f;
+            while (timer < exitDelay)
+            {
+                timer += Time.deltaTime;
+                grainCanvasGroup.alpha = Mathf.Lerp(0f, 0.7f, timer / fadeDuration);
+                yield return null;
+            }
+
+            //finish at exactly 0.7
+            grainCanvasGroup.alpha = 0.7f;
+        }
+        else
+        {
+            Debug.LogError("Cannot fade: grainCanvasGroup is missing");
         }
 
-        //ending panel, change to png sequence later
+            ////film grain fade
+            //grainCanvasGroup.alpha = 0f;
+            //filmGrain.SetActive(true);
 
-        //creditSequence.SetActive(true);
-        //pause on black screen for now
-        Time.timeScale = 0f;
+            ////fade pngs
+
+            //float timer = 0f;
+            ////Color colour = fadeImage.color;
+
+            //while (timer < fadeDuration)
+            //{
+            //    timer += Time.deltaTime;
+            //    grainCanvasGroup.alpha = Mathf.Lerp(0f, 0.7f, timer / fadeDuration);
+            //    //fadeImage.color = colour;
+            //    yield return null;
+            //}
+
+            //ending panel, change to png sequence later
+
+
+            //pause gmaeplay
+            Time.timeScale = 0f;
 
     }
 

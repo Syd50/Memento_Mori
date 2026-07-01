@@ -10,3 +10,5 @@ public class PlayetExit : MonoBehaviour
         }
     }
 }
+
+// get fall time in the console to track it
