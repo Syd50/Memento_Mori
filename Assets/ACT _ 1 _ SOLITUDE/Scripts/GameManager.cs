@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject filmGrain;
     //holds png sequence, animator and cangvas group
      private CanvasGroup grainCanvasGroup;
+    private bool hasExited = false;
 
 
     //ACT 1
@@ -40,11 +41,12 @@ public class GameManager : MonoBehaviour
 
         if (grainCanvasGroup == null)
         {
-            grainCanvasGroup.alpha = 0f;
+            Debug.Log("Missing Canvas Group component on " + filmGrain.name);
+           
         }
         else
         {
-            Debug.Log("Missing Canvas Group component on " + filmGrain.name);
+            grainCanvasGroup.alpha = 0f; //starts off hidden
         }
     }
 
@@ -90,7 +92,6 @@ public class GameManager : MonoBehaviour
     }
 
     //ACT 3
-    private bool hasExited = false;
 
     public void PlayerReachedExit()
     {
