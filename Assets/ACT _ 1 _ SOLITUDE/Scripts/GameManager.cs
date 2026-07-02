@@ -25,6 +25,17 @@ public class GameManager : MonoBehaviour
      private CanvasGroup grainCanvasGroup;
     private bool hasExited = false;
 
+    //Film borders
+    [SerializeField] private RectTransform topBorder;
+    [SerializeField] private RectTransform bottomBorder;
+    [SerializeField] private float borderSlideDuration = 1.5f;
+    [SerializeField] private float targetBorderHeight = 50f;
+
+    //PNG sequence - THE END
+    [SerializeField] private GameObject theEndSequenceObject;
+    //[SerializeField] private float sequenceDelay = 8f;
+
+
 
     //ACT 1
     private void Awake()
@@ -48,7 +59,24 @@ public class GameManager : MonoBehaviour
         {
             grainCanvasGroup.alpha = 0f; //starts off hidden
         }
+        //lets hide the border instead of a fade
+        SlideBorders();
     }
+
+    private void SlideBorders()
+    {
+        if (topBorder !=null && bottomBorder !=null)
+        {
+            //position outside of the screen
+            topBorder.anchoredPosition = new Vector2(0, targetBorderHeight);
+            bottomBorder.anchoredPosition = new Vector2(0, -targetBorderHeight);
+            //this needs to be in one of he coroutines below 
+
+            //mayvbe make slide duration the same as the fade duration
+
+        }
+    }
+
 
     //stop road immediately?
     public void GameOver()
@@ -101,6 +129,10 @@ public class GameManager : MonoBehaviour
         hasExited = true;
 
         StartCoroutine(ExitSequence());
+
+
+        //PNG The End
+        //StartCoroutine(PlayEndSequenceAfterDelay());
     }
 
 
@@ -116,6 +148,12 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(exitDelay);
 
+        //start sldiing after the de;ay
+        if(topBorder !=null && bottomBorder != null)
+        {
+            StartCoroutine(SlideBordersIn());
+        }
+
         if (grainCanvasGroup != null)
         {
             //try forcing to be zero so it doesnt flash weirdly
@@ -127,12 +165,12 @@ public class GameManager : MonoBehaviour
             while (timer < exitDelay)
             {
                 timer += Time.deltaTime;
-                grainCanvasGroup.alpha = Mathf.Lerp(0f, 0.7f, timer / fadeDuration);
+                grainCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / fadeDuration);
                 yield return null;
             }
 
             //finish at exactly 0.7
-            grainCanvasGroup.alpha = 0.7f;
+            grainCanvasGroup.alpha = 1f;
         }
         else
         {
@@ -165,4 +203,67 @@ public class GameManager : MonoBehaviour
     }
 
 
+    //private IEnumerator PlayEndSequenceAfterDelay()
+    //{
+    //    yield return new WaitForSeconds(sequenceDelay);
+
+    //    if (theEndSequenceObject != null)
+    //    {
+    //        theEndSequenceObject.SetActive(true);
+    //        Debug.Log("The End PNG sequence started");
+    //    }
+    //}
+
+    private IEnumerator SlideBordersIn()
+    {
+        float timer = 0f;
+
+        //startinmg pos
+        Vector2 topStart = new Vector2(0, targetBorderHeight);
+        Vector2 toppEnd = Vector2.zero;
+
+        Vector2 bottomStart = new Vector2(0, -targetBorderHeight);
+        Vector2 bottomEnd = Vector2.zero;
+
+        while (timer < borderSlideDuration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / borderSlideDuration;
+
+            //smoother
+            t = Mathf.SmoothStep(0f, 1f, t);
+
+            topBorder.anchoredPosition = Vector2.Lerp(topStart, toppEnd, t);
+            bottomBorder.anchoredPosition = Vector2.Lerp(bottomStart, bottomEnd, t);
+
+            yield return null;
+        }
+
+        //fix the wonky bit
+
+        // make sure its aligned
+
+        topBorder.anchoredPosition = toppEnd;
+        bottomBorder.anchoredPosition = bottomEnd;
+
+
+        //make the THe END part start as soon as bordeer reaaches 50 height
+
+        if (theEndSequenceObject != null)
+        {
+            theEndSequenceObject.SetActive(true);
+            Debug.Log("Borders DONE, PLAY THE END");
+
+            Time.timeScale = 0f;
+              
+        }
+    }
+
+
 }
+
+
+
+//the end is playing, but behind everything / weirdly placed in scene view
+//make it follow the follow camera's view?
+//stick to the other 1/3 of the screen
