@@ -5,6 +5,17 @@ public class IKController : MonoBehaviour
 
     private Animator animator;
 
+    //spine3, head do nothing to affect what the pelvis is misaligning
+    //rotate pelvis, get rid of other targets
+
+    //Spine 3
+    //public Transform spine3Target;
+    ////head target
+    //public Transform headTarget;
+
+    //pelvis
+    public Transform pelvisTarget;
+
     //pedals
     public Transform leftFootTarget;
     public Transform rightFootTarget;
@@ -27,6 +38,41 @@ public class IKController : MonoBehaviour
     private void OnAnimatorIK(int layerIndex)
     {
         if (animator == null) return;
+
+        //spine3
+        //if(spine3Target != null)
+        //{
+        //    //cant  use  Avartar IK goal - doesnt work 
+        //    //dont think unity includes the chest for ik goal
+        //    //direclty control humanoid bones (set bone local rotation)
+        //    animator.SetBoneLocalRotation(HumanBodyBones.Chest, spine3Target.localRotation);
+        //}
+
+        ////head target
+        //if (headTarget != null)
+        //{
+        //    animator.SetLookAtWeight(1f, 0f, 1f, 0f, 0.5f);
+        //    animator.SetLookAtPosition(headTarget.position);
+        //}
+
+
+        //pelvis - cant find a unity ref for this
+        //if target?
+        if (pelvisTarget != null)
+        {
+            //weight 100% locked
+            //animator.bodyPositionWeight = 1f;
+            //animator.bodyRotationWeight = 1f;
+
+            //match targets
+            animator.bodyPosition = pelvisTarget.position; 
+            animator.bodyRotation = pelvisTarget.rotation;
+
+            //unity docs - animator is taking most of control 
+            //need to forcce this script + my actual game obj to transform when i change rotation
+
+            transform.rotation = pelvisTarget.rotation;
+        }
 
         //Left food
         if (leftFootTarget != null)

@@ -70,7 +70,8 @@ public class MonsterSpawner : MonoBehaviour
 
             //pick a random lane on thew road
             float randomX = Random.Range(-roadWidth / 2f, roadWidth / 2f);
-            monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
+            //monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
+            monster.transform.position = new Vector3(randomX, spawnYPosition, spawnZPosition);
 
             //turn it on
             monster.SetActive(true);
