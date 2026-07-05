@@ -67,13 +67,31 @@ public class GameManager : MonoBehaviour
         {
             spawner.enabled = false;
         }
+        
+        //each piece of road is acting independently - script messes up when only applied to parent
 
-        ObjectPoolRoad[] roads = Object.FindObjectsByType<ObjectPoolRoad>(FindObjectsSortMode.None);
-        foreach (ObjectPoolRoad road in roads)
+
+
+        //ObjectPoolRoad[] roads = Object.FindObjectsByType<ObjectPoolRoad>(FindObjectsSortMode.None);
+        //foreach (ObjectPoolRoad road in roads)
+        //{
+        //    road.enabled = false;
+        //}
+
+
+        //what if -------------------------------------------------------------------------- DEBUG FLICKERING / RESETTING WEIRDLY
+        // ONE controller only
+        // all segments ARE the same lenght, so force it to work like that - what if there's somehting not in the inspector or something else that makes it think the pieces are different lengths
+        // make it just work with one script and one road manger
+
+        // + remove script from each road piece, only have it on parent obj.
+        QuadRoadLooper roadLooper = FindFirstObjectByType<QuadRoadLooper>();
+        if (roadLooper != null)
         {
-            road.enabled = false;
+            roadLooper.enabled = false;
         }
 
+        //---------------------------------------------------------- Above is new bit for road
         StartCoroutine(FadeToGameOver());
     }
 
@@ -114,8 +132,15 @@ public class GameManager : MonoBehaviour
         MonsterSpawner spawner = FindFirstObjectByType<MonsterSpawner>();
         if (spawner != null) spawner.enabled = false;
 
-        ObjectPoolRoad[] roads = Object.FindObjectsByType<ObjectPoolRoad>(FindObjectsSortMode.None);
-        foreach (ObjectPoolRoad road in roads) road.enabled = false;
+        //ObjectPoolRoad[] roads = Object.FindObjectsByType<ObjectPoolRoad>(FindObjectsSortMode.None);
+        //foreach (ObjectPoolRoad road in roads) road.enabled = false;
+
+        QuadRoadLooper roadLooper = FindFirstObjectByType<QuadRoadLooper>();
+        if (roadLooper != null)
+        {
+            roadLooper.enabled = false;
+        }
+        //-------------------------------------- new bit for road
 
         // slide after the delay
         if (topBorder != null && bottomBorder != null)

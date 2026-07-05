@@ -1,44 +1,53 @@
-using System.Runtime.CompilerServices;
-using NUnit.Framework;  
 using UnityEngine;
 
-public class ObjectPoolRoad : MonoBehaviour
+public class QuadRoadLooper : MonoBehaviour
 {
+    public float scrollSpeed = 1.5f;
+    public float segmentLength = 2f;
+    public float recycleZ = -2f;
 
+    private Transform[] segments;
 
-    [Header("Movement Settings")]
-    public float scrollSpeed = 10f;
-    public float segmentLength = 20f;
-    public int totalSegments = 5;
-
-    private float recycleThreshold;
-    private float resetOffset;
-
-    private void Start()
+    void Start()
     {
-        //z position where the piece is fully offscreen
-        recycleThreshold = Camera.main.transform.position.z - (segmentLength * 1.5f);
+        segments = new Transform[transform.childCount];
 
-        //total distance to snap back in line again
-        resetOffset = segmentLength * totalSegments;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            segments[i] = transform.GetChild(i);
+        }
     }
 
-    private void Update()
+    void Update()
     {
-        //move  back to the bottom of the screen
-        transform.Translate(Vector3.back * scrollSpeed * Time.deltaTime, Space.World);
-
-        //once it passes the bottom threshold it needs to come back
-        //if it meets a certain point, go back
-
-        if (transform.position.z < recycleThreshold)
+        foreach (Transform segment in segments)
         {
-            transform.position += new Vector3(0, 0, resetOffset);
+            segment.position += Vector3.back * scrollSpeed * Time.deltaTime;
+
+            if (segment.position.z < recycleZ)
+            {
+                float furthestZ = GetFurthestZ();
+                segment.position = new Vector3(
+                    segment.position.x,
+                    segment.position.y,
+                    furthestZ + segmentLength
+                );
+            }
+        }
+    }
+
+    float GetFurthestZ()
+    {
+        float furthest = segments[0].position.z;
+
+        foreach (Transform segment in segments)
+        {
+            if (segment.position.z > furthest)
+                furthest = segment.position.z;
         }
 
+        return furthest;
     }
-
-
 }
 //{
 
@@ -124,7 +133,7 @@ public class ObjectPoolRoad : MonoBehaviour
 //        {
 //            _cloneToPrefabMap.Remove(obj);
 //        }
-        
+
 
 //    }
 
