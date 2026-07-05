@@ -2518,7 +2518,7 @@ PrefabInstance:
     - target: {fileID: 920448391124977945, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 78a21ff786f57bd45b308bcad69fd488, type: 2}
+      objectReference: {fileID: 2100000, guid: 47cfcd022f3c2494eb918065f4adbedc, type: 2}
     - target: {fileID: 1723866223041371365, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       propertyPath: m_TagString
       value: Ragdoll
@@ -2530,11 +2530,11 @@ PrefabInstance:
     - target: {fileID: 6761708314861323176, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 78a21ff786f57bd45b308bcad69fd488, type: 2}
+      objectReference: {fileID: 2100000, guid: 47cfcd022f3c2494eb918065f4adbedc, type: 2}
     - target: {fileID: 7043936641192853927, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 78a21ff786f57bd45b308bcad69fd488, type: 2}
+      objectReference: {fileID: 2100000, guid: 47cfcd022f3c2494eb918065f4adbedc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -2572967989333021709, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
@@ -6623,7 +6623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &824946669
 RectTransform:
   m_ObjectHideFlags: 0
