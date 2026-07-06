@@ -18,6 +18,8 @@ public class MonsterSpawner : MonoBehaviour
     //How far left and right the monsters can spawn
     public float roadWidth = 6f;
 
+    public float roadCenterX = 0f;
+
     [Header("Monster Movement")]
     //how fast they move towards the bike
     public float monsterSpeed = 8f;
@@ -69,7 +71,7 @@ public class MonsterSpawner : MonoBehaviour
             Debug.Log("About to activate ");
 
             //pick a random lane on thew road
-            float randomX = Random.Range(-roadWidth / 2f, roadWidth / 2f);
+            float randomX = roadCenterX + Random.Range(-roadWidth / 2f, roadWidth / 2f);
             //monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
             monster.transform.position = new Vector3(randomX, spawnYPosition, spawnZPosition);
 

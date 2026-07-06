@@ -477,6 +477,7 @@ MonoBehaviour:
   spawnZPosition: 5
   spawnYPosition: 0.7
   roadWidth: 1.5
+  roadCenterX: -1
   monsterSpeed: 2
   despawnZPosition: -2
   despawnYPosition: 0
@@ -3310,7 +3311,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5553,7 +5554,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5921,7 +5922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8900790948836105918}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: -0, z: 1, w: 6.123234e-17}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.00008595205, y: -0.007070084, z: -0.05310903}
   m_LocalScale: {x: 7.116446, y: 3.326341, z: 13.442176}
   m_ConstrainProportionsScale: 0
@@ -6434,8 +6435,8 @@ RotationConstraint:
   m_Enabled: 1
   serializedVersion: 2
   m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 180}
-  m_RotationOffset: {x: 0, y: 90, z: 0}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: -90, z: 0}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1

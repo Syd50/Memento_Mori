@@ -30,7 +30,7 @@ public class QuadRoadLooper : MonoBehaviour
                 segment.position = new Vector3(
                     segment.position.x,
                     segment.position.y,
-                    furthestZ + segmentLength
+                    furthestZ + segmentLength - 0.05f
                 );
             }
         }
