@@ -1,19 +1,24 @@
-using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class SwitchCamera : MonoBehaviour
 {
-
-    //just switching priority
-
     public CinemachineCamera wideCam;
     public CinemachineCamera closeCam;
 
-    public void SwitchToClose()
+    void Start()
     {
-        wideCam.Priority = 0;
-        closeCam.Priority = 10;
+        wideCam.Priority = 100;
+        closeCam.Priority = 0;
     }
 
+    public void SwitchToClose()
+    {
+        Debug.Log("Switching ");
+
+        wideCam.Priority = 0;
+        closeCam.Priority = 100;
+
+       
+    }
 }

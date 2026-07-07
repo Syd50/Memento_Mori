@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ContinueAfterYes : MonoBehaviour
 {
-
+    public UIFade uiFade;
     public GameObject continueUIPage;
     public GameObject stillFishingFrame;
     public GameObject inbetweenFishingSequence;
@@ -17,7 +17,8 @@ public class ContinueAfterYes : MonoBehaviour
 
     IEnumerator ContinueSequence()
     {
-        continueUIPage.SetActive(false);
+        //continueUIPage.SetActive(false);
+        yield return StartCoroutine(uiFade.FadeOut());
 
         yield return new WaitForSeconds(waitBeforeInbetween);
 
