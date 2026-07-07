@@ -27,6 +27,9 @@ public class MonsterSpawner : MonoBehaviour
     public float despawnZPosition = -15f;
     public float despawnYPosition = 0;
 
+
+    
+
     private float spawnTimer;
 
     private void Start()
@@ -74,6 +77,7 @@ public class MonsterSpawner : MonoBehaviour
             float randomX = roadCenterX + Random.Range(-roadWidth / 2f, roadWidth / 2f);
             //monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
             monster.transform.position = new Vector3(randomX, spawnYPosition, spawnZPosition);
+
 
             //turn it on
             monster.SetActive(true);

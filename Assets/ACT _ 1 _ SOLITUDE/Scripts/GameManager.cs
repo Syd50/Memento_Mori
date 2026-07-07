@@ -30,11 +30,16 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
 
-        grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
+        if (filmGrain)
+        {
+            grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
+        }
+        
+            //grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
 
         if (grainCanvasGroup == null)
         {
-            Debug.Log("Missing Canvas Group component on " + filmGrain.name);
+            Debug.Log("Missing Canvas Group component on filmgrain");
         }
         else
         {

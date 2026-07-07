@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!4 &53789613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7789604308832172767, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!4 &152909583 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2838483916438310875, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
@@ -668,6 +668,7 @@ MonoBehaviour:
   spawnZPosition: 5
   spawnYPosition: 0.7
   roadWidth: 1.5
+  roadCenterX: 0.07841162
   monsterSpeed: 2
   despawnZPosition: -2
   despawnYPosition: 0
@@ -2853,7 +2854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!1 &1283655317
 GameObject:
   m_ObjectHideFlags: 0
@@ -4133,7 +4134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!4 &1787322116 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4185397757899411570, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
@@ -5801,7 +5802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!4 &1982824585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3749901620396901084, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
@@ -6029,7 +6030,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolRoad
   scrollSpeed: 1.3
   segmentLength: 1
-  totalSegments: 6
+  recycleZ: -2
 --- !u!1 &2047593112
 GameObject:
   m_ObjectHideFlags: 0

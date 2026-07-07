@@ -12,7 +12,7 @@ public class MonsterCollision : MonoBehaviour
         //the thing we hit must have a tag - 'player'
         if (other.CompareTag("Player"))
         {
-            //Debug.Log("PLayer hit monster");
+            Debug.Log("PLayer hit monster");
 
             GameManager.Instance.GameOver();
         }
