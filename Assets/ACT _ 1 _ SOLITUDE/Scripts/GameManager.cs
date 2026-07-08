@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool freezePlayerVelocityAtExit = true;
 
     private bool fallStarted = false;
+    //player bounces back up?
+    //need to glue the player to ground / freeze game when hits floor
 
     //ACT 1
     public GameObject gameOverPanel;

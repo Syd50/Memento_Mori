@@ -2557,6 +2557,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       insertIndex: -1
       addedObject: {fileID: 301476358}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 301476361}
     - targetCorrespondingSourceObject: {fileID: 1723866223041371365, guid: 9b5420199c55cf347967d051cfda0620, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1428697765}
@@ -2744,6 +2747,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e22299b26ba65d64b987132e9ff8554d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayetExit
+--- !u!114 &301476361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301476352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5f580a75c068a4585e8db9976454f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StopPlayerLanding
 --- !u!1 &303616807
 GameObject:
   m_ObjectHideFlags: 0
@@ -9219,7 +9234,7 @@ GameObject:
   - component: {fileID: 1143870362}
   m_Layer: 0
   m_Name: floor
-  m_TagString: Ground
+  m_TagString: FallFloor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

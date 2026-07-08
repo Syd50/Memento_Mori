@@ -9,6 +9,7 @@ TagManager:
   - Exit
   - Wall
   - Floor
+  - FallFloor
   layers:
   - Default
   - TransparentFX
