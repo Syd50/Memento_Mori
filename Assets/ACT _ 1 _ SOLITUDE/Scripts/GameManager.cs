@@ -1,10 +1,20 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    //CREDIT SEQUENCE - ABSOLUTELY THE END
+    //FALLING timing
+    [SerializeField] private Transform player;
+    [SerializeField] private Rigidbody playerRb;
+    [SerializeField] private Transform floor;
+    [SerializeField] private float fallDuration = 28.7f;
+    [SerializeField] private bool freezePlayerVelocityAtExit = true;
+
+    private bool fallStarted = false;
 
     //ACT 1
     public GameObject gameOverPanel;
@@ -34,8 +44,8 @@ public class GameManager : MonoBehaviour
         {
             grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
         }
-        
-            //grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
+
+        //grainCanvasGroup = filmGrain.GetComponent<CanvasGroup>();
 
         if (grainCanvasGroup == null)
         {
@@ -72,7 +82,7 @@ public class GameManager : MonoBehaviour
         {
             spawner.enabled = false;
         }
-        
+
         //each piece of road is acting independently - script messes up when only applied to parent
 
 
@@ -121,10 +131,66 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("EXIT REACHED");
 
-        if (hasExited) return;
-        hasExited = true;
+        if (hasExited == true)
+        {
+            return;
+        }
+        else
+        {
+            hasExited = true;
 
-        StartCoroutine(ExitSequence());
+            MobileInputManager movement = player.GetComponent<MobileInputManager>();
+
+            if (movement != null)
+            {
+                movement.enabled = false;
+            }
+
+            if (fallStarted == false)
+            {
+                fallStarted = true;
+                SetupTimedFall();
+            }
+
+            StartCoroutine(ExitSequence());
+        }
+    }
+    private void SetupTimedFall()
+    {
+        if (player == null)
+        {
+            Debug.Log("Player is missing!");
+        }
+        else if (floor == null)
+        {
+            Debug.Log("Floor is missing!");
+        }
+        else
+        {
+            float gravity = Mathf.Abs(Physics.gravity.y);
+
+            float initialVelocityY = 0f;
+
+            if (playerRb != null)
+            {
+                if (freezePlayerVelocityAtExit == true)
+                {
+                    playerRb.linearVelocity = Vector3.zero;
+                }
+
+                initialVelocityY = Mathf.Abs(playerRb.linearVelocity.y);
+            }
+
+            float fallDistance = (initialVelocityY * fallDuration) + (0.5f * gravity * fallDuration * fallDuration);
+
+
+
+            Vector3 floorPosition = floor.position;
+            floorPosition.y = player.position.y - fallDistance;
+            floor.position = floorPosition;
+
+            Debug.Log("Floor moved to Y = " + floor.position.y);
+        }
     }
 
     private IEnumerator ExitSequence()
@@ -213,7 +279,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Border DONE ");
 
             // pause bg 
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
         }
     }
 }
