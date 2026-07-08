@@ -11,13 +11,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/ACT 1 - SOLITUDE.unity
     guid: e3ad45a11dcb2c64a83f27ba9376c427
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ACT 1 - TEST.unity
     guid: 1ac4a99e0c5c2fb46aeaa2ee69315bff
   - enabled: 1
     path: Assets/Scenes/ACT 2 - SUNKEN COST.unity
     guid: fc03b8226f169524e87c2601c7140bd9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ACT 3 - CELL BLOCK 44.unity
     guid: 986e879aba74e974cab60255fd490110
   m_configObjects:
