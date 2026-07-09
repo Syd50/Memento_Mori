@@ -6,6 +6,7 @@ public class PlayetExit : MonoBehaviour
     {
         if (other.CompareTag("Exit"))
         {
+            MusicManager.Instance.PlayExitMusic();
             GameManager.Instance.PlayerReachedExit();
         }
     }
