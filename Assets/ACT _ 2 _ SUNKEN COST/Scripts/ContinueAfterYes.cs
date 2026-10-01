@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ContinueAfterYes : MonoBehaviour
 {
@@ -35,6 +36,20 @@ public class ContinueAfterYes : MonoBehaviour
 
     public Animator quoteAnimator;
 
+    //SFX
+    //casting the line - plays onthe inbetween anim
+    public AudioSource fishingAudio;
+    public AudioSource fallingAudio;
+
+    //SWITCHING SCENES
+
+    public string nextSceneName;
+    public float timeOnQuoteCamera = 14f;
+
+    //adding this brought other CLICK YES UI screen
+    //public float fadeTime = 1f;
+    //maybe make separate fading script which will use a fade ui screen that doesnt destroy on load?
+
 
     private void Start()
     {
@@ -67,6 +82,10 @@ public class ContinueAfterYes : MonoBehaviour
 
         stillFishingFrame.SetActive(false);
         inbetweenFishingSequence.SetActive(true);
+        //delay a little
+        yield return new WaitForSeconds(2f);
+        //SFX right after casting line plays
+        fishingAudio.Play();
 
         yield return new WaitForSeconds(waitBeforeFalling);
 
@@ -88,6 +107,9 @@ public class ContinueAfterYes : MonoBehaviour
 
         fallingTargetAnimator.enabled = true;
 
+        // Play falling sound
+        fallingAudio.Play();
+
         //wait 1 sec after fall starts
         yield return new WaitForSeconds(waitAfterFallStarts);
 
@@ -108,6 +130,18 @@ public class ContinueAfterYes : MonoBehaviour
         switchCamera.SwitchToQuoteOne();
 
         quoteAnimator.enabled = true;
+
+        //stay on the quote cam for about 6 seconds??
+        yield return new WaitForSeconds(timeOnQuoteCamera);
+
+        //fadee out
+
+        //Or this one fades from alpha 0 -1 
+        //and ACT 3 goes from 1-0
+        //yield return StartCoroutine(uiFade.FadeIn());
+
+        SceneManager.LoadScene(nextSceneName);
+
 
     }
 

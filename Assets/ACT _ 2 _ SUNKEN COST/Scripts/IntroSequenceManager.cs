@@ -8,7 +8,7 @@ public class IntroSequenceManager : MonoBehaviour
     public GameObject continueUIPage;
 
     public float speed = 500f;
-    public float startX = -1200f;
+    public float startX = -1600f;
     public float endX = 1200f;
     public float delayAfterCloud = 1f;
     public UIFade uiFade;

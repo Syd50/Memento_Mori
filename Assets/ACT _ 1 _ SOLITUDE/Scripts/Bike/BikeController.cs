@@ -10,8 +10,8 @@ public class BikeController : MonoBehaviour
     //tilting off the road, callibrate it so the middle is always the middle
     private float tiltOffset = 0f;
 
-    
-    
+    public float roadCenterX = 0.7f; // actual center
+
 
     //smoothing out visuals
     public float leanAmount = 25f;
@@ -52,7 +52,8 @@ public class BikeController : MonoBehaviour
         //move bike side to side
         float newXPosition = transform.position.x +(tiltInput * tiltSensitivity * Time.deltaTime);
         //keeps bike on the road, restrict value between a min and max
-        newXPosition = Mathf.Clamp(newXPosition, -roadWidthLimit, roadWidthLimit);
+        //newXPosition = Mathf.Clamp(newXPosition, -roadWidthLimit, roadWidthLimit);
+        newXPosition = Mathf.Clamp(newXPosition, roadCenterX - roadWidthLimit, roadCenterX + roadWidthLimit);
 
         //only y and z
         //update bike position
@@ -64,5 +65,8 @@ public class BikeController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(0, 0, targetZRotation);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * smoothLeanSpeed);
 
+
+        if (GetComponent<Rigidbody>() != null)
+            GetComponent<Rigidbody>().WakeUp();
     }
 }

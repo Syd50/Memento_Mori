@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public Image fadeImage;
     public float fadeDuration = 2f;
+    [SerializeField] private AudioSource act1LoopAudio;
+    [SerializeField] private GameObject gameOverDialogueBox;
 
     //ACT 3
     [SerializeField] private float exitDelay = 2f;
@@ -35,11 +38,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float borderSlideDuration = 1.5f;
     [SerializeField] private float targetBorderHeight = 50f;
 
-    //PNG sequence - THE END
-    [SerializeField] private GameObject theEndSequenceObject;
 
+
+    //ROLES
+    //[SerializeField] private GameObject composerA;
+    //[SerializeField] private GameObject composerF;
+
+    //CREDIT SEQUENCE
+
+    //PNG sequence - THE END
+    //[SerializeField] private GameObject theEndSequenceObject;
+    [SerializeField] private float creditPageTime = 3f;
+
+    // CREDITS
+    [SerializeField] private GameObject creditsPanel;
+    [SerializeField] private float creditsStartDelay = 3f;
+
+    //List of roles instead of writing a var for each one
+    [SerializeField] private GameObject[] creditPages;
+
+
+    //TRANSITION BETWEEN ACT 3 And credits
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip exitSound;
+
+
+   
+
+    //act 3
     private void Awake()
     {
+        //act 1
+
+        if (gameOverDialogueBox != null)
+        {
+            gameOverDialogueBox.SetActive(false);
+        }
+
+        //act 3
         Instance = this;
 
         if (filmGrain)
@@ -58,15 +94,37 @@ public class GameManager : MonoBehaviour
             grainCanvasGroup.alpha = 0f; //starts off hidden
         }
 
+        //if (finalImage != null)
+        //{
+        //    finalImage.alpha = 0f;
+        //    finalImage.gameObject.SetActive(false);
+        //}
+
+
         SlideBorders();
 
-        // turn off at start
-        if (theEndSequenceObject != null)
+        //// turn off at start
+        //if (theEndSequenceObject != null)
+        //{
+        //    theEndSequenceObject.SetActive(false);
+        //}
+
+
+        //CREDITS SHOULD NOT BE ACTIVE ATR THE START
+        if (creditsPanel != null)
         {
-            theEndSequenceObject.SetActive(false);
+            creditsPanel.SetActive(false);
+        }
+
+        foreach (GameObject page in creditPages)
+        {
+            if (page != null)
+            {
+                page.SetActive(false);
+            }
         }
     }
-
+    //act 3
     private void SlideBorders()
     {
         if (topBorder != null && bottomBorder != null)
@@ -77,6 +135,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //act 1
     public void GameOver()
     {
         MonsterSpawner spawner = FindFirstObjectByType<MonsterSpawner>();
@@ -102,6 +161,7 @@ public class GameManager : MonoBehaviour
         // make it just work with one script and one road manger
 
         // + remove script from each road piece, only have it on parent obj.
+        //act 1
         QuadRoadLooper roadLooper = FindFirstObjectByType<QuadRoadLooper>();
         if (roadLooper != null)
         {
@@ -112,6 +172,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeToGameOver());
     }
 
+    //act 1 and 3 somehow?
     private IEnumerator FadeToGameOver()
     {
         float timer = 0f;
@@ -126,12 +187,38 @@ public class GameManager : MonoBehaviour
         }
 
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0f;
+
+        if (act1LoopAudio != null)
+        {
+            act1LoopAudio.Stop();
+        }
+
+        //add dialogue after a few seconds
+        yield return new WaitForSeconds(4f);
+
+        if (gameOverDialogueBox != null)
+        {
+            gameOverDialogueBox.SetActive(true);
+        }
+
+        // Keep the dialogue  on screen for 5 seconds
+        yield return new WaitForSeconds(5f);
+
+        //Load Act 2 -solitude
+        SceneManager.LoadScene("ACT 2 - SUNKEN COST");
+
+        Time.timeScale = 1f;
     }
 
+    //act 3
     public void PlayerReachedExit()
     {
         Debug.Log("EXIT REACHED");
+
+        if (audioSource != null && exitSound != null)
+        {
+            audioSource.PlayOneShot(exitSound);
+        }
 
         if (hasExited == true)
         {
@@ -148,15 +235,26 @@ public class GameManager : MonoBehaviour
                 movement.enabled = false;
             }
 
+            //switch camera
+            CameraController cameraController = FindFirstObjectByType<CameraController>();
+
+            if (cameraController != null)
+            {
+                cameraController.StartFallingCameraSequence();
+            }
+
+
             if (fallStarted == false)
             {
                 fallStarted = true;
                 SetupTimedFall();
             }
 
+            StartCoroutine(StartCreditsAfterDelay());
             StartCoroutine(ExitSequence());
         }
     }
+    //act 3 and credits
     private void SetupTimedFall()
     {
         if (player == null)
@@ -274,17 +372,90 @@ public class GameManager : MonoBehaviour
         topBorder.anchoredPosition = toppEnd;
         bottomBorder.anchoredPosition = bottomEnd;
 
-        // triggers instantly when borders hit  destination height positions
-        if (theEndSequenceObject != null)
-        {
-            theEndSequenceObject.SetActive(true);
-            Debug.Log("Border DONE ");
+        //// triggers instantly when borders hit  destination height positions
+        //if (theEndSequenceObject != null)
+        //{
+        //    theEndSequenceObject.SetActive(true);
+        //    Debug.Log("Border DONE ");
 
-            // pause bg 
-            //Time.timeScale = 0f;
-        }
+        //    // pause bg 
+        //    //Time.timeScale = 0f;
+        //}
+
+
     }
+
+    private IEnumerator StartCreditsAfterDelay()
+    {
+        yield return new WaitForSeconds(creditsStartDelay);
+
+        if (creditsPanel != null)
+        {
+            creditsPanel.SetActive(true);
+        }
+
+        foreach (GameObject page in creditPages)
+        {
+            if (page != null)
+            {
+                page.SetActive(true);
+
+                yield return new WaitForSeconds(creditPageTime);
+
+                page.SetActive(false);
+            }
+        }
+
+        if (creditsPanel != null)
+        {
+            creditsPanel.SetActive(false);
+        }
+
+        Act3Ending act3Ending = FindFirstObjectByType<Act3Ending>();
+
+        if (act3Ending != null)
+        {
+            act3Ending.FreezeAndShowFinalImage();
+        }
+
+       
+    }
+
+  
+
+
+
+    //the freeze and ttile
+    //private IEnumerator FreezeAndShowFinalImage()
+    //{
+    //    // Freeze the gameplay exactly where it is
+    //    Time.timeScale = 0f;
+
+    //    if (finalImage != null)
+    //    {
+    //        finalImage.gameObject.SetActive(true);
+    //        finalImage.alpha = 0f;
+
+    //        float timer = 0f;
+
+    //        while (timer < finalImageFadeDuration)
+    //        {
+    //            timer += Time.unscaledDeltaTime;
+
+    //            finalImage.alpha = Mathf.Lerp(
+    //                0f,
+    //                1f,
+    //                timer / finalImageFadeDuration
+    //            );
+
+    //            yield return null;
+    //        }
+
+    //        finalImage.alpha = 1f;
+    //    }
+    //}
 }
+
 
 
 

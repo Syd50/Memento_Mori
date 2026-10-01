@@ -63,28 +63,70 @@ public class MonsterSpawner : MonoBehaviour
         MoveAndRecycleMonsters(); // make this one later too
     }
 
+
+
+
     void SpawnMonster()
     {
-        //find a monster that is NOT active
-        GameObject monster = GetPooledMonster(); // ------------- make this method after
-
-        if(monster != null)
+        GameObject monster = GetPooledMonster();
+        if (monster != null)
         {
-
-            Debug.Log("About to activate ");
-
-            //pick a random lane on thew road
             float randomX = roadCenterX + Random.Range(-roadWidth / 2f, roadWidth / 2f);
-            //monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
             monster.transform.position = new Vector3(randomX, spawnYPosition, spawnZPosition);
+            monster.transform.rotation = Quaternion.identity; // reset rotation
 
+            Rigidbody rb = monster.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
 
-            //turn it on
             monster.SetActive(true);
-
-            Debug.Log("Activated " + monster.name);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //void SpawnMonster()
+    //{
+    //    //find a monster that is NOT active
+    //    GameObject monster = GetPooledMonster(); // ------------- make this method after
+
+    //    if(monster != null)
+    //    {
+
+    //        Debug.Log("About to activate ");
+
+    //        //pick a random lane on thew road
+    //        float randomX = roadCenterX + Random.Range(-roadWidth / 2f, roadWidth / 2f);
+    //        //monster.transform.position = new Vector3(randomX, 0.5f, spawnZPosition);
+    //        monster.transform.position = new Vector3(randomX, spawnYPosition, spawnZPosition);
+
+    //        //force collider physics to reset before reactivating
+
+
+    //        Collider col = monster.GetComponent<Collider>();
+    //        col.enabled = false;
+    //        //turn it on
+    //        monster.SetActive(true);
+
+    //        col.enabled = true;
+
+    //        Debug.Log("Activated " + monster.name);
+    //    }
+    //}
 
     GameObject GetPooledMonster()
     {
